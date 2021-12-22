@@ -1,0 +1,7 @@
+location to goreman: cd github.com/go.etcd.io/etcd/contrib/raftexample/
+location to tokenActions service: cd web/services/tokenActions/tokenActions_service/
+location to user service: cd web/services/user/user_service/
+location to postStatus service: cd web/services/post/post_service/
+location to web.go: cd cmd/web/
+location to test: cd web/testCases
+running testcases: go run mainTest.go registerLoginTest.go followUnfollowTest.go postTest.go

@@ -1,0 +1,29 @@
+syntax = "proto3";
+
+package post_pb;
+
+option go_package = "/";
+
+message UserPostList {
+    repeated Post PostList= 1;
+}
+
+message Post {
+    int32 UserID = 1; string PostText = 2;
+}
+
+message PostPbStruct {
+    repeated int32 FolloweeUserIDsList = 1; // users whose post we want
+    bool AddPostStatus = 2;
+}
+ 
+
+service PostsService {
+    rpc GetFolloweePosts(PostPbStruct) returns (UserPostList) {}; //input needs list of userIds whose post we want and returns the post list
+
+    rpc AddPost(Post) returns (UserPostList) {}; //input needs poster's userId and postText and returns post status
+
+    rpc ClearAllPosts(Post) returns (PostPbStruct) {}; // input needs dummy struct, returns dummy struct
+
+    rpc GetAllPosts(Post) returns (UserPostList) {}; //input needs dummy struct, returns entire post list
+}

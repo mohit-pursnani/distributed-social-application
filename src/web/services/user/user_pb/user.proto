@@ -1,0 +1,45 @@
+syntax = "proto3";
+
+package user_pb;
+
+option go_package = "/";
+
+message UserStruct  { int32 IdNum = 1; string UserName = 2; string FirstName = 3; string LastName = 4; string Password = 5; repeated string Following = 6; }
+
+message UsersMap { map<string, UserStruct> User = 1; }
+
+message IdToUserName { map<int32, string> UserIDToNameMap= 1; }
+
+message UserStatus { bool Status = 1; }
+
+// will be used at the time of Following as well as un following
+message ActionForFollowee { string CurrentUserName = 1; string UserNameForOperation = 2; }
+
+message UserStructStruct {
+  UserStruct User = 1;
+}
+
+
+service UserService {
+    rpc AddToUsersMap(UserStruct) returns (UserStatus) {};
+    // add to user id and user name map
+    //rpc AddIdToUserName(UserStruct) returns (UserStatus) {};
+
+    rpc FollowUser(ActionForFollowee) returns (UserStatus) {};
+
+    rpc UnfollowUser(ActionForFollowee) returns (UserStatus) {};
+    //check if user credentials are correct
+    rpc CheckCred(UserStruct) returns (UserStatus) {};
+    // get user name by user id
+    // take input of user id and return user name
+    rpc GetUserNameByUserId(UserStruct) returns (UserStruct) {};
+
+    // get userstruct from user map
+    rpc GetUserFromUserName(UserStruct) returns (UserStructStruct) {};
+
+    rpc GetUserFromUserId(UserStruct) returns (UserStructStruct) {};
+
+    rpc GetAllUsers(UserStruct) returns (UsersMap) {};
+
+    rpc ClearAllUsers(UserStruct) returns (UsersMap) {}; // takes dummy struct and returns dummy struct
+  }

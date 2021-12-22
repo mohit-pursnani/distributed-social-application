@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+package tokenActions_pb;
+
+option go_package = "/";
+
+message AuthenticationToken { map<string, int32> TokenMap = 1; }
+
+message TokenActionsPbStruct {int32 UserID = 1; bool TokenStatus = 2; string Key = 3; int32 Value = 4;}
+
+service TokenActionsService {
+  rpc RegisterToken(TokenActionsPbStruct) returns (TokenActionsPbStruct) {}; //Output needs token Key, input needs userId
+  rpc DeleteToken(TokenActionsPbStruct) returns (TokenActionsPbStruct) {}; //input needs token Key, output needs status
+  // return token map to test if token was successfully registered in the database
+  rpc GetTokenMap(TokenActionsPbStruct) returns (AuthenticationToken) {}; //input needs dummy object and output needs Authen..Token (entire site map)
+  rpc ClearAllTokens(TokenActionsPbStruct) returns (TokenActionsPbStruct) {}; //input needs dummy object and outpus dummy object
+}
